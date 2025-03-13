@@ -1,0 +1,55 @@
+header {
+  width: 100vw;
+  height: 80px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 60px;
+  padding: 10px 0;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  width: 100%;
+  height: 450px;
+}
+
+.hero img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+}
+
+.hero img:nth-child(2) {
+  width: 50%;
+  height: 100px;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  object-fit: cover;
+}
+
+.offer {
+  width: 20%;
+  border: 2px solid red;
+}
+
+.offer img {
+  object-fit: cover;
+  width: 10%;
+}
+
+.sign {
+  /* display: flex;
+  justify-content: center;
+  align-items: flex-end; */
+}
+
