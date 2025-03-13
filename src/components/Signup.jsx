@@ -1,8 +1,11 @@
 // import { Link } from "react-router-dom";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Signup = () => {
+  const [token, setToken] = useState(Number(Cookies.get("token")) || 0);
+
   const submitForm = async () => {
     try {
       e.preventDefault();
@@ -12,11 +15,15 @@ const Signup = () => {
           email: data.email,
           username: data.account.username,
           newsletter: data.newsletter,
-          token: data.token,
+          //   token: data.token,
         }
       );
-      Cookies.set("userToken", response.data.token);
+
+      Cookies.set("token", { expires: 3 });
       setToken(response.data.token);
+
+      //   Cookies.set("userToken", response.data.token);
+      //   setToken(response.data.token);
       navigate("/signup");
     } catch (error) {
       alert(error.response);
