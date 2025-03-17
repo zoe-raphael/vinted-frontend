@@ -1,30 +1,23 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-// import Signup from "./Signup";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { Range } from "react-range";
+import { useState } from "react";
+import React from "react";
+// import LabeledTwoThumbsExample from "../../node_modules/react-range/lib/types";
 
-const Header = () => {
-  // const navigate = useNavigate();
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(
-  //         "https://lereacteur-vinted-api.herokuapp.com/user/signup"
-  //       );
-  //       setData(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+const Header = ({
+  setUser,
+  userToken,
+  title,
+  setTitle,
+  priceMin,
+  setPriceMin,
+  priceMax,
+  setPriceMax,
+  rtl,
+}) => {
+  const existingToken = userToken;
+  const [values, setValues] = useState([50]);
 
   return (
     <div className="wrapper">
@@ -34,16 +27,40 @@ const Header = () => {
             <img src={logo} alt="logo vinted" />
           </Link>
         </div>
-        <input type="text" placeholder="Rechercher des articles" />
+        <div className="left-header">
+          {/* <Range 
+          {
+            class Range extends React.Component {
+              render() {
+                return (
+                  <div
+                    label="Select your value"
+                    step={0.1}
+                    min={0}
+                    max={100}
+                    values={values}
+                    onChange={(event) => setValues(event.target.value)}
+                  ></div>
+                );
+              }
+            }
+          }/> */}
+        </div>
         <div className="sign">
-          {/* <button
-            onClick={async (event) => {
-             
-            }}
-          >
-             <button onClick={navigate("/signup")}>S'inscrire</button> 
-          </button>  */}
-          <Link to={"/signup"}>Se connecter</Link>
+          {existingToken ? (
+            <button
+              onClick={() => {
+                setUser(null);
+              }}
+            >
+              Se déconnecter
+            </button>
+          ) : (
+            <>
+              <Link to={"/signup"}>S'inscrire</Link>
+              <Link to={"/login"}>Se connecter</Link>
+            </>
+          )}
 
           <button>Vends tes articles</button>
         </div>
@@ -51,5 +68,13 @@ const Header = () => {
     </div>
   );
 };
+
+{
+  /* // export const ({ rtl }) => (
+
+//   <LabeledTwoThumbsExample rtl={rtl} />
+
+// ); */
+}
 
 export default Header;
