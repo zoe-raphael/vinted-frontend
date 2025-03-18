@@ -1,12 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const Login = () => {
+const Login = ({ handleToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  // const [userToken, setUserToken] = useState(Number(Cookies.get("token")) || 0);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://lereacteur-vinted-api.herokuapp.com/user/login",
+        {
+          email,
+          password,
+        }
+      );
+      handleToken(response.data.token);
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleEmailChange = (event) => {
     const value = event.target.value;
@@ -21,25 +40,8 @@ const Login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
-          onSubmit={async (event) => {
-            event.preventDefault();
-            try {
-              const response = await axios.post(
-                "https://lereacteur-vinted-api.herokuapp.com/user/login",
-                {
-                  email: email,
-                  password: password,
-                }
-              );
-              if (response.data.token) {
-                // store token dans cookies
-                // changer un state pour actualiser l'affichage dans le header
-                // rediriger l'utilisateur vers la page home
-              }
-            } catch (error) {}
-          }}
           type="text"
           onChange={handleEmailChange}
           value={email}
@@ -48,12 +50,12 @@ const Login = () => {
           name="email"
         />
         <input
-          type="text"
+          type="password"
           onChange={handlePasswordChange}
           value={password}
-          placeholder="Email"
-          id="email"
-          name="email"
+          placeholder="Password"
+          id="password"
+          name="password"
         />
         <button>Se connecter</button>
         {errorMessage && <p className="error">{errorMessage}</p>}

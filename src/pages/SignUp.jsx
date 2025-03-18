@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const Signup = () => {
+const Signup = ({ handleToken }) => {
   const [userToken, setUserToken] = useState(Number(Cookies.get("token")) || 0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,15 +36,15 @@ const Signup = () => {
                   email,
                   username,
                   password,
-                  newsletter: false,
+                  newsletter: newsletter,
                 }
               );
               // console.log(response.data);
 
               //   token: data.token,
               if (response.data.token) {
-                Cookies.set("token", response.data.token);
-                setUserToken(response.data.token);
+                // Cookies.set("token", response.data.token);
+                handleToken(response.data.token);
                 navigate("/home");
               } else {
                 setErrorMessage("Email ou mot de passe incorrect");
@@ -108,8 +108,6 @@ const Signup = () => {
           {errorMessage && <p className="error">{errorMessage}</p>}
           <Link to="/login">Déjà un compte ? Se connecter </Link>
         </form>
-
-        <div></div>
       </div>
     </main>
   );

@@ -33,6 +33,7 @@ const Offer = () => {
           alt="apercu de la fringue"
         />
         <div>{data.product_name}</div>
+        <div>{data.product_price}</div>
         <button>Acheter</button>
       </div>
     </main>
